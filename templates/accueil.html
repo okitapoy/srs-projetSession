@@ -3,6 +3,45 @@
 {% block titre%}Page d'accueil{% endblock %}
 
 {% block corps %}
-<h1>INM5151-prototype</h1>
+
+<div class="container">
+	<div class="row">
+
+		<div class="col">
+
+			<h3>Se connecter</h3>
+
+			<form action="/profil">
+				<div class="form-group">
+					<label for="email">Adresse courriel:</label>
+					<input type="email" name="email" class="form-control" placeholder="Entrer le courriel" id="email">	
+				</div>
+
+				<div class="form-group">
+					<label for="pwd">Mot de passe:</label>
+					<input type="password" name="password" class="form-control" placeholder="Entrer le mot de passe" id="pwd">	
+				</div>
+
+				<button type="submit" class="btn btn-outline-primary">Accéder au compte</button>
+				
+			</form>
+
+			<div>
+				<h4>Vous n'avez pas de compte?</h4>
+			    <p>Appuyez sur le lien ci-dessous pour créer votre compte.</p>
+			    <a href="/inscription" class="btn btn-outline-success" role="button">Créez un compte</a>
+			</div>
+
+
+		</div>
+
+
+
+
+		
+	</div>
+	
+
+</div>
 
 {% endblock %}

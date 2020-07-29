@@ -42,3 +42,28 @@ app = Flask(__name__)
 @app.route('/')
 def page_acceuil():
     return render_template('accueil.html')
+
+
+
+@app.route('/profil')
+def page_profil():
+	return render_template('profil.html')
+
+
+
+@app.route('/inscription')
+def page_inscription():
+	return render_template('inscription.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
