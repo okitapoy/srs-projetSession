@@ -1,0 +1,105 @@
+{% extends "squelette.html" %}
+
+{% block titre%}Page du groupe{% endblock %}
+
+
+{% block corps %}
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <!--img class="card-img-top" src="static/images/file_de_cadeau.jpeg" alt="Card image"-->
+            <div class="card-body">
+              <h5 class="card-title">Gestion de la pige</h5>
+              <p class="card-text">Date de la pige : toto</p>
+              <p class="card-text">Date de l'échange : toto</p>
+              <p class="card-text">Montant maximum : toto</p>
+              <p class="card-text">Modifier mon profil</p>
+
+              <a href="/creer_groupe" class="btn btn-outline-success" role="button">Modifer la pige</a>
+              <a href="/creer_groupe" class="btn btn-outline-success" role="button">Effectuer la pige</a>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+      <div class="row">
+        <div class="col-12 col-lg-4">
+          <div class="card">
+          	<img class="card-img-top" src="static/images/file_de_cadeau.jpeg" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">PIGE DE : NOM #123</h5>
+              <p class="card-text">Date de la pige : toto</p>
+              <p class="card-text">Date de l'échange : toto</p>
+              <p class="card-text">Montant maximum : toto</p>
+              <p class="card-text">Modifier mon profil</p>
+
+
+              
+            </div>
+            
+          </div>
+        </div>
+
+
+
+
+    
+        <div class="col-12 col-lg-4">
+          <div class="card">
+            <img class="card-img-top" src="static/images/file_de_cadeau.jpeg" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">MA LISTE DE SOUHAITS</h5>
+              <p class="card-text">toto</p>
+              <p class="card-text">toto</p>
+              <p class="card-text">toto</p>
+              <p class="card-text">TOTO</p>
+
+
+              <a href="/creer_groupe" class="btn btn-outline-success" role="button">Modifier ma liste</a>
+              
+            </div>
+            
+          </div>
+        </div>
+
+
+
+
+
+
+        <div class="col-12 col-lg-4">
+          <div class="card">
+
+          	<img class="card-img-top" src="static/images/group.svg" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">PARTICIPANTS</h5>
+              <p class="card-text"> nom toto</p>
+              <p class="card-text"> nom toto</p>
+              <p class="card-text"> nom toto</p>
+              <p class="card-text"> nom toto</p>
+              <p class="card-text"> nom toto</p>
+              <p class="card-text"> nom toto</p>
+              <p class="card-text"> nom toto</p>
+
+            <div>
+				<!--h4>Vous avez déjà compte?</h4-->
+			    <a href="/creer_groupe" class="btn btn-outline-success" role="button">Créer un groupe</a>
+			</div>
+              
+            </div>
+          </div>  
+        </div>
+
+        
+      </div>
+
+{% endblock %}

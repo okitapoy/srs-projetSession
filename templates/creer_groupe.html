@@ -1,0 +1,43 @@
+{% extends "squelette.html" %}
+
+{% block titre%}Page d'inscription{% endblock %}
+
+
+{% block corps %}
+
+<div class="container">
+	<div class="row">
+
+		<div class="col">
+
+			<h3>Organisateur</h3>
+			<p>En tant que créateur du groupe, vous serez l'administrateur du groupe</p>
+			<p>Vous aurez la rensponsbilité d'invité des participants et de fixer les</p>
+			<p>règles de l'échange de cadeau. </p>
+
+			<form action="/groupe">
+				
+				<div class="form-group">
+					<label for="nom">Nom du groupe :</label>
+					<input type="text" name="nom" class="form-control" placeholder="Entrer le nom" id="nom">	
+				</div>
+
+
+
+				<button type="submit" class="btn btn-outline-primary">Créer le groupe</button>
+				
+			</form>
+
+
+		</div>
+
+
+
+
+		
+	</div>
+	
+
+</div>
+
+{% endblock %}

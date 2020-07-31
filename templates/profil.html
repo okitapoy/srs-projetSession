@@ -4,6 +4,51 @@
 
 
 {% block corps %}
-<h1>INM5151-prototype-page profil</h1>
+
+      <div class="row">
+        <div class="col-12 col-lg-4">
+          <div class="card">
+          	<img class="card-img-top" src="static/images/avatar1.png" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">Mes informations</h5>
+              <p class="card-text">Nom : toto</p>
+              <p class="card-text">Prenom : toto</p>
+              <p class="card-text">Courriel : toto</p>
+              <p class="card-text">Modifier mon profil</p>
+              
+            </div>
+            
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-4">
+          <div class="card">
+          	<img class="card-img-top" src="static/images/group.svg" alt="Card image">
+            <div class="card-body">
+              <h5 class="card-title">Mes groupes</h5>
+              <p class="card-text">Contenu de la carte ... texte</p>
+
+            <div>
+				<!--h4>Vous avez déjà compte?</h4-->
+			    <a href="/creer_groupe" class="btn btn-outline-success" role="button">Créer un groupe</a>
+			</div>
+              
+            </div>
+          </div>  
+        </div>
+        
+
+        <!--div class="col-12 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Titre de la carte</h5>
+              <p class="card-text">Contenu de la carte ... texte</p>
+              
+            </div>
+          </div>  
+        </div-->
+        
+      </div>
 
 {% endblock %}

@@ -6,4 +6,54 @@
 {% block corps %}
 <h1>INM5151-prototype-page inscription</h1>
 
+<div class="container">
+	<div class="row">
+
+		<div class="col">
+
+			<h3>Inscription</h3>
+
+			<form action="/profil">
+				
+				<div class="form-group">
+					<label for="nom">Nom:</label>
+					<input type="text" name="nom" class="form-control" placeholder="Entrer votre nom" id="nom">	
+				</div>
+
+				<div class="form-group">
+					<label for="prenom">Prénom:</label>
+					<input type="prenom" name="prenom" class="form-control" placeholder="Entrer votre prénom" id="prenom">	
+				</div>
+
+				<div class="form-group">
+					<label for="email">Adresse courriel:</label>
+					<input type="email" name="email" class="form-control" placeholder="Entrer votre courriel" id="email">	
+				</div>
+
+				<div class="form-group">
+					<label for="pwd">Mot de passe:</label>
+					<input type="password" name="password" class="form-control" placeholder="Entrer votre mot de passe" id="pwd">	
+				</div>
+
+				<button type="submit" class="btn btn-outline-primary">Soumettre</button>
+				
+			</form>
+
+			<div>
+				<h4>Vous avez déjà compte?</h4>
+			    <a href="/" class="btn btn-outline-success" role="button">Connectez vous</a>
+			</div>
+
+
+		</div>
+
+
+
+
+		
+	</div>
+	
+
+</div>
+
 {% endblock %}

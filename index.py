@@ -56,6 +56,16 @@ def page_inscription():
 	return render_template('inscription.html')
 
 
+@app.route('/creer_groupe')
+def creer_groupe():
+	return render_template('creer_groupe.html')
+
+
+@app.route('/groupe')
+def groupe():
+	return render_template('groupe.html')
+
+
 
 
 
