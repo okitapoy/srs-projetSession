@@ -11,10 +11,16 @@
           	<img class="card-img-top" src="static/images/avatar1.png" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">Mes informations</h5>
-              <p class="card-text">Nom : toto</p>
-              <p class="card-text">Prenom : toto</p>
-              <p class="card-text">Courriel : toto</p>
-              <p class="card-text">Modifier mon profil</p>
+              <p class="card-text">Nom : {{profil['nom']}}</p>
+              <p class="card-text">Prenom : {{profil['prenom']}}</p>
+              <p class="card-text">Courriel : {{profil['email']}}</p>
+   
+
+            <div>
+				<!--h4>Vous avez déjà compte?</h4-->
+			    <a href="#" class="btn btn-outline-success" role="button">Gerer mon profil</a>
+			</div>
+
               
             </div>
             
@@ -27,7 +33,28 @@
           	<img class="card-img-top" src="static/images/group.svg" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">Mes groupes</h5>
-              <p class="card-text">Contenu de la carte ... texte</p>
+
+
+            <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th>Nom du groupe</th>
+                    <th>Numero du groupe</th>
+                  </tr>
+ 
+
+                  {% for groupe in groupes %}
+
+                    <tr style="cursor:pointer" onclick="location.href='/groupe?id={{groupe['id']}}'">
+                      <td>{{groupe['nom']}}</td>
+                      <td>{{groupe['id']}}</td>
+                    </tr>
+
+
+                   {% endfor %}
+
+                </table>
+            </div>
 
             <div>
 				<!--h4>Vous avez déjà compte?</h4-->

@@ -11,7 +11,12 @@
 
 			<h3>Se connecter</h3>
 
-			<form action="/profil">
+			{% if erreur is defined and erreur|int == 1 %}
+			<h5>Le mot de passe ou l'adresse courriel n'est pas valide, veuillez reéssayer.</h5>
+			<p>PEeeeeeeeefffffff</p>
+			{% endif %}
+
+			<form action="/profil" method="POST">
 				<div class="form-group">
 					<label for="email">Adresse courriel:</label>
 					<input type="email" name="email" class="form-control" placeholder="Entrer le courriel" id="email">	

@@ -65,6 +65,55 @@
 
 
               <a href="/creer_groupe" class="btn btn-outline-success" role="button">Modifier ma liste</a>
+
+
+
+
+              <!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+
+
+      <form action="/groupe?id={{groupeId}}">
+        
+        <div class="form-group">
+          <label for="nom">Nom du groupe :</label>
+          <input type="text" name="nom" class="form-control" placeholder="Entrer le nom" id="nom">  
+        </div>
+
+
+
+        <button type="submit" class="btn btn-outline-primary">Créer le groupe</button>
+        
+      </form>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
               
             </div>
             
@@ -82,13 +131,29 @@
           	<img class="card-img-top" src="static/images/group.svg" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">PARTICIPANTS</h5>
-              <p class="card-text"> nom toto</p>
-              <p class="card-text"> nom toto</p>
-              <p class="card-text"> nom toto</p>
-              <p class="card-text"> nom toto</p>
-              <p class="card-text"> nom toto</p>
-              <p class="card-text"> nom toto</p>
-              <p class="card-text"> nom toto</p>
+
+
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th>Prénom</th>
+                    <th>Nom de famille</th>
+                  </tr>
+ 
+
+                  {% for participant in participants %}
+
+                    <tr>
+                      <td>{{participant['prenom']}}</td>
+                      <td>{{participant['nom']}}</td>
+                    </tr>
+
+
+                   {% endfor %}
+
+                </table>
+              </div>  
+
 
             <div>
 				<!--h4>Vous avez déjà compte?</h4-->
