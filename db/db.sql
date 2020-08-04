@@ -27,6 +27,7 @@ create table participant(
 
 
 create table cadeaux(
+	cadeauId integer primary key,
 	groupeId integer,
 	userId integer,
 	cadeau text,

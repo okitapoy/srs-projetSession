@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-12 col-lg-4">
           <div class="card">
-          	<img class="card-img-top" src="static/images/avatar1.png" alt="Card image">
+          	<img class="card-img-top" src="{{url_for('static',filename='images/avatar1.png')}}" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">Mes informations</h5>
               <p class="card-text">Nom : {{profil['nom']}}</p>
@@ -30,7 +30,7 @@
 
         <div class="col-12 col-lg-4">
           <div class="card">
-          	<img class="card-img-top" src="static/images/group.svg" alt="Card image">
+          	<img class="card-img-top" src="{{url_for('static',filename='images/group.svg')}}" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">Mes groupes</h5>
 
@@ -45,7 +45,7 @@
 
                   {% for groupe in groupes %}
 
-                    <tr style="cursor:pointer" onclick="location.href='/groupe?id={{groupe['id']}}'">
+                    <tr style="cursor:pointer" onclick="location.href='/groupe/{{groupe['id']}}/{{profil['id']}}'">
                       <td>{{groupe['nom']}}</td>
                       <td>{{groupe['id']}}</td>
                     </tr>

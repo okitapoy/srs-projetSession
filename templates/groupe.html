@@ -32,9 +32,9 @@
 
 
       <div class="row">
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-12">
           <div class="card">
-          	<img class="card-img-top" src="static/images/file_de_cadeau.jpeg" alt="Card image">
+          	<!--img class="card-img-top" src="{{url_for('static',filename='images/file_de_cadeau.jpeg')}}" alt="Card image"-->
             <div class="card-body">
               <h5 class="card-title">PIGE DE : NOM #123</h5>
               <p class="card-text">Date de la pige : toto</p>
@@ -48,29 +48,59 @@
             
           </div>
         </div>
+      </div>
 
 
 
 
-    
-        <div class="col-12 col-lg-4">
+      <div class="row">
+
+        <div class="col-12 col-lg-6">
           <div class="card">
-            <img class="card-img-top" src="static/images/file_de_cadeau.jpeg" alt="Card image">
+            <img class="card-img-top" src="{{url_for('static',filename='images/file_de_cadeau.jpeg')}}" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">MA LISTE DE SOUHAITS</h5>
-              <p class="card-text">toto</p>
-              <p class="card-text">toto</p>
-              <p class="card-text">toto</p>
-              <p class="card-text">TOTO</p>
 
 
-              <a href="/creer_groupe" class="btn btn-outline-success" role="button">Modifier ma liste</a>
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th>Article</th>
+                    <th>Hyperlien</th>
+                    <th>Enlever</th>
+                  </tr>
+ 
+
+                  {% for cadeau in cadeaux %}
+
+                    <tr>
+                      <!--td><button class="button" onclick="location.href='/'" type="button">Enlever</button></td-->
+                      <td>{{cadeau['cadeau']}}</td>
+                      <td>{{cadeau['url']}}</td>
+                      <td>
+                         <button class="btn btn-danger" onclick="location.href='/retirer_cadeau/{{groupeId}}/{{userId}}/{{cadeau['cadeauId']}}'" 
+                          type="button">Enlever</button>
+                      </td>
+                    </tr>
+
+
+                   {% endfor %}
+
+                </table>
+              </div> 
+
+              {% if cadeaux|length > 5 %}
+              <p>Vous pouvez seulement ajouter 5 cadeaux</p>
+              {% endif %}
+
+
+              <a href="/creer_groupe" class="btn btn-outline-success" role="button">Ajouter un cadeau</a>
 
 
 
 
               <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ajouter un cadeau</button>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -80,22 +110,25 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 class="modal-title">Liste de souhaits</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        <p>Veuillez remplir toutes les cases.</p>
 
 
-      <form action="/groupe?id={{groupeId}}">
+      <form action="/ajouter_cadeau/{{groupeId}}/{{userId}}" method="POST">
         
         <div class="form-group">
-          <label for="nom">Nom du groupe :</label>
-          <input type="text" name="nom" class="form-control" placeholder="Entrer le nom" id="nom">  
+          <label for="cadeau">Description du cadeau :</label>
+          <input type="text" name="cadeau" class="form-control" placeholder="Entrer Description" id="cadeau">  
+
+          <label for="url">Hyperlien du site :</label>
+          <input type="text" name="url" class="form-control" placeholder="Entrer url" id="url">
         </div>
 
 
 
-        <button type="submit" class="btn btn-outline-primary">Créer le groupe</button>
+        <button type="submit" class="btn btn-outline-primary">Ajouter le cadeau</button>
         
       </form>
 
@@ -125,10 +158,10 @@
 
 
 
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-6">
           <div class="card">
 
-          	<img class="card-img-top" src="static/images/group.svg" alt="Card image">
+          	<img class="card-img-top" src="{{url_for('static',filename='images/group.svg')}}" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">PARTICIPANTS</h5>
 

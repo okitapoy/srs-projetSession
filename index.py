@@ -105,17 +105,60 @@ def creer_groupe():
 	return render_template('creer_groupe.html')
 
 
-@app.route('/groupe')
-def groupe():
+@app.route('/groupe/<id>/<userId>')
+def groupe(id,userId):
 	db = get_db()
-	participants = db.get_participant_du_groupes(request.args['id'])
+	participants = db.get_participant_du_groupes(id)
+	liste_cadeaux = db.get_user_cadeaux(userId,id)
 	liste_participants = []
 
 	for parti in participants:
 		le_participant = db.get_user_with_id(parti['id'])
 		if le_participant:
 			liste_participants.append(le_participant[0])
-	return render_template('groupe.html', participants = liste_participants, groupeId = request.args['id'])
+	return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId)
+
+
+
+
+@app.route('/ajouter_cadeau/<id>/<userId>', methods=['POST','GET'])
+def ajouter_cadeau(id,userId):
+	db = get_db()
+
+	db.ajouter_cadeau(id,userId,request.form['cadeau'],request.form['url'])
+	participants = db.get_participant_du_groupes(id)
+	liste_cadeaux = db.get_user_cadeaux(userId,id)
+	liste_participants = []
+
+	for parti in participants:
+		le_participant = db.get_user_with_id(parti['id'])
+		if le_participant:
+			liste_participants.append(le_participant[0])
+	#return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId)
+	return redirect (url_for('groupe', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId, id =id))
+
+
+
+@app.route('/retirer_cadeau/<id>/<userId>/<cadeauId>', methods=['POST','GET'])
+def retirer_cadeau(id,userId,cadeauId):
+	db = get_db()
+
+	db.enlever_cadeau(id,userId,cadeauId)
+	participants = db.get_participant_du_groupes(id)
+	liste_cadeaux = db.get_user_cadeaux(userId,id)
+	liste_participants = []
+
+	for parti in participants:
+		le_participant = db.get_user_with_id(parti['id'])
+		if le_participant:
+			liste_participants.append(le_participant[0])
+	#return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId)
+	return redirect (url_for('groupe', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId, id =id))
+
+
+
+
+
 
 
 

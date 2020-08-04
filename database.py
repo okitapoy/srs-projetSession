@@ -65,3 +65,26 @@ class Database:
         cursor.execute("select * from participant where groupeId is ?",(_id,))
         res = [dict(row) for row in cursor.fetchall()]
         return res
+
+
+    def get_user_cadeaux(self,_userId,_groupeId):
+        cursor = self.get_connection().cursor()
+        #cursor.execute(("select * from groupe where participant is ?"),(_id))
+        cursor.execute("select * from cadeaux where userId is ? and groupeId is ?",(_userId,_groupeId,))
+        res = [dict(row) for row in cursor.fetchall()]
+        return res
+
+
+
+    def ajouter_cadeau(self,_groupeId,_userId,_cadeau,_url):
+        connection = self.get_connection()
+        connection.execute(("insert into cadeaux(groupeId,userId,cadeau,url)"
+                            "values(?,?,?,?)"),(_groupeId,_userId,_cadeau,_url))
+        connection.commit()
+
+
+
+    def enlever_cadeau(self,_groupeId,_userId,_cadeauId):
+        connection = self.get_connection()
+        connection.execute("delete from cadeaux where cadeauId is ? and groupeId is ? and userId is ?",(_cadeauId,_groupeId,_userId,))
+        connection.commit()
