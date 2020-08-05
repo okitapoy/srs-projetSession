@@ -134,6 +134,21 @@ class Database:
 
 
 
+    def ajouter_user(self,_nom,_prenom,_email,_password):
+        connection = self.get_connection()
+        with connection:
+            cursor = connection.cursor()
+            cursor.execute(("insert into user(nom,prenom,email,password)"
+                                "values(?,?,?,?)"),(_nom,_prenom,_email,_password))
+            print(cursor.lastrowid)
+            #return(cursor.lastrowid)
+            last = cursor.lastrowid
+        #self.disconnect()
+        #self.get_user_with_id(last)
+        return last
+
+
+
 
 
 

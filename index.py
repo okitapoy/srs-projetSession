@@ -116,12 +116,21 @@ def affichier_profil():
 	return render_template('profil.html',profil = user, groupes = listeGroupe)
 
 
+
+@app.route('/creer_compte', methods=['POST'])
+def creer_compte():
+	db = get_db()
+	#_userId = 1
+	_userId = db.ajouter_user(request.form['nom'],request.form['prenom'],request.form['email'],request.form['password'])
+	return redirect(url_for('affichier_profil', userId = _userId))
+
+
+
 @app.route('/creer_groupe/<adminId>', methods=['POST'])
 def creer_groupe(adminId):
 	db = get_db()
 	db.ajouter_groupe(request.form['nom'],adminId,request.form['montant'],request.form['date'])
 	return redirect(url_for('affichier_profil', userId = adminId))
-	#return render_template('profil.html', profil = user, groupes = listeGroupe)
 
 
 @app.route('/groupe/<id>/<userId>')
