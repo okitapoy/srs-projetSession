@@ -42,6 +42,20 @@ class Database:
         return res
 
 
+
+    def get_user_with_email(self,_email):
+        cursor = self.get_connection().cursor()
+        cursor.execute("select * from user where email is ?",(_email,))
+        res = [dict(row) for row in cursor.fetchall()]
+        return res
+
+    def get_groupe_admin(self,_id):
+        cursor = self.get_connection().cursor()
+        cursor.execute("select admin from groupe where id is ?",(_id,))
+        res = [dict(row) for row in cursor.fetchall()]
+        return res
+
+
      # a revoir --  retirer
     def get_user_groupes(self,_id):
         cursor = self.get_connection().cursor()
@@ -88,3 +102,38 @@ class Database:
         connection = self.get_connection()
         connection.execute("delete from cadeaux where cadeauId is ? and groupeId is ? and userId is ?",(_cadeauId,_groupeId,_userId,))
         connection.commit()
+
+
+
+    def ajouter_participant(self,_groupeId,_userId):
+        connection = self.get_connection()
+        connection.execute(("insert into participant(groupeId,id)"
+                            "values(?,?)"),(_groupeId,_userId))
+        connection.commit()
+
+
+
+    def enlever_participant(self,_groupeId,_userId):
+        connection = self.get_connection()
+        connection.execute("delete from participant where groupeId is ? and id is ?",(_groupeId,_userId,))
+        connection.commit()
+
+
+
+    def ajouter_groupe(self,_nom,_admin,_montant,_datePige):
+        connection = self.get_connection()
+        with connection:
+            cursor = connection.cursor()
+            cursor.execute(("insert into groupe(nom,admin,montant,datePige)"
+                                "values(?,?,?,?)"),(_nom,_admin,_montant,_datePige))
+            #print(cursor.lastrowid)
+            #return(cursor.lastrowid)
+            last = cursor.lastrowid
+        self.disconnect()
+        self.ajouter_participant(last,_admin)
+
+
+
+
+
+

@@ -6,6 +6,8 @@
 {% block corps %}
 
 
+{% if adminId == userId %}
+
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -26,9 +28,7 @@
         </div>
       </div>
 
-
-
-
+{% else %}
 
 
       <div class="row">
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-
+{% endif %}
 
 
 
@@ -67,7 +67,7 @@
                   <tr>
                     <th>Article</th>
                     <th>Hyperlien</th>
-                    <th>Enlever</th>
+                    <th></th>
                   </tr>
  
 
@@ -89,15 +89,10 @@
                 </table>
               </div> 
 
-              {% if cadeaux|length > 5 %}
-              <p>Vous pouvez seulement ajouter 5 cadeaux</p>
-              {% endif %}
-
-
-              <a href="/creer_groupe" class="btn btn-outline-success" role="button">Ajouter un cadeau</a>
-
-
-
+{% if cadeaux|length > 4 %}
+<p>Vous pouvez seulement ajouter 5 cadeaux</p>
+<p>Vous pouvez enlever un cadeau pour l'échanger</p>
+{% else %}
 
               <!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Ajouter un cadeau</button>
@@ -144,6 +139,7 @@
 
   </div>
 </div>
+{% endif %}
 
 
 
@@ -171,6 +167,7 @@
                   <tr>
                     <th>Prénom</th>
                     <th>Nom de famille</th>
+                    <th></th>
                   </tr>
  
 
@@ -179,6 +176,11 @@
                     <tr>
                       <td>{{participant['prenom']}}</td>
                       <td>{{participant['nom']}}</td>
+                      <td>
+                          <button class="btn btn-danger" 
+                          onclick="location.href='/retirer_participant/{{groupeId}}/{{userId}}/{{participant['id']}}'" 
+                          type="button">Enlever</button>
+                      </td>
                     </tr>
 
 
@@ -189,8 +191,62 @@
 
 
             <div>
-				<!--h4>Vous avez déjà compte?</h4-->
-			    <a href="/creer_groupe" class="btn btn-outline-success" role="button">Créer un groupe</a>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ajouterParticipant">Ajouter un participant</button>
+
+<!-- Modal -->
+<div id="ajouterParticipant" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ajouter un participant</h4>
+      </div>
+      <div class="modal-body">
+        <p>Veuillez fourinir l'adresse courriel du participant</p>
+        <p>Le participant doit etre un abonné du site pour pouvoir l'ajoutter.</p>
+
+
+      <form action="/ajouter_participant/{{groupeId}}/{{userId}}" method="POST">
+        
+        <div class="form-group">
+          <label for="email">Adresse couriel du participant :</label>
+          <input type="text" name="email" class="form-control" placeholder="Entrer le courriel" id="email">  
+        </div>
+
+
+
+        <button type="submit" class="btn btn-outline-primary">Ajouter le participant</button>
+        
+      </form>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 			</div>
               
             </div>

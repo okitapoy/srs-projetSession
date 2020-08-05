@@ -12,9 +12,9 @@ create table groupe(
 	id integer primary key,
 	nom varchar(100),
 	admin integer,
-	participant integer,
-	foreign key (admin) references user(id),
-	foreign key (participant) references user(id)
+	montant integer,
+	datePige text,
+	foreign key (admin) references user(id)
 );
 
 
@@ -45,8 +45,8 @@ insert into user (nom,prenom,email,password) values("quatrieme","user4","user4@e
 insert into user (nom,prenom,email,password) values("cinquieme","user5","user5@email.com","password");
 insert into user (nom,prenom,email,password) values("sixieme","user6","user6@email.com","password");
 
-insert into groupe (nom,admin,participant) values("groupe 11",1,1);
-insert into groupe (nom,admin,participant) values("groupe 22",4,4);
+insert into groupe (nom,admin,montant,datePige) values("groupe 11",1,100,"2020-12-10");
+insert into groupe (nom,admin,montant,datePige) values("groupe 22",4,75,"2020-10-05");
 
 insert into participant (groupeId,id) values(1,1);
 insert into participant (groupeId,id) values(1,2);

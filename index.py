@@ -71,14 +71,40 @@ def page_acceuil():
 
 
 
-@app.route('/profil', methods=['POST'])
+@app.route('/profil', methods=['POST','GET'])
 def page_profil():
 	db = get_db()
-	userListe = db.get_user(request.form['email'],request.form['password'])
-	listeGroupe = []
-	#user = userListe[0]
-	#groupes = db.get_user_groupes(user['id'])
+	if request.method == 'POST':
+		userListe = db.get_user(request.form['email'],request.form['password'])
+		listeGroupe = []
+		if userListe:
+			user = userListe[0]
+			#groupes = db.get_participant_groupes(user['id'])
 
+			#for groupe in groupes:
+				#le_groupe = db.get_user_groupes(groupe['groupeId'])
+				#if le_groupe:
+					#listeGroupe.append(le_groupe[0])
+
+			#return render_template('profil.html', profil = user, groupes = listeGroupe)
+			#return redirect(url_for('affichier_profil', profil = user['id'], groupes = listeGroupe))
+			return redirect(url_for('affichier_profil', userId = user['id'] ))
+		else:
+			return redirect(url_for('page_acceuil',erreur = 1))
+	else:
+		user = request.args['profil']
+		listeGroupe = request.args['listeGroupe']
+		#render_template('profil.html', profil = user, groupes = listeGroupe)
+		return redirect(url_for('page_profil', profil = user, groupes = listeGroupe))
+
+
+
+@app.route('/affichier_profil')
+def affichier_profil():
+	db = get_db()
+
+	userListe = db.get_user_with_id(request.args['userId'])
+	listeGroupe = []
 	if userListe:
 		user = userListe[0]
 		groupes = db.get_participant_groupes(user['id'])
@@ -87,27 +113,23 @@ def page_profil():
 			le_groupe = db.get_user_groupes(groupe['groupeId'])
 			if le_groupe:
 				listeGroupe.append(le_groupe[0])
-
-		return render_template('profil.html', profil = user, groupes = listeGroupe)
-	else:
-		return redirect(url_for('page_acceuil',erreur = 1))
+	return render_template('profil.html',profil = user, groupes = listeGroupe)
 
 
-
-@app.route('/inscription')
-def page_inscription():
-	return render_template('inscription.html')
-
-
-@app.route('/creer_groupe')
-def creer_groupe():
-	print(request.args['id'])
-	return render_template('creer_groupe.html')
+@app.route('/creer_groupe/<adminId>', methods=['POST'])
+def creer_groupe(adminId):
+	db = get_db()
+	db.ajouter_groupe(request.form['nom'],adminId,request.form['montant'],request.form['date'])
+	return redirect(url_for('affichier_profil', userId = adminId))
+	#return render_template('profil.html', profil = user, groupes = listeGroupe)
 
 
 @app.route('/groupe/<id>/<userId>')
 def groupe(id,userId):
 	db = get_db()
+
+	admin = db.get_groupe_admin(id)[0]['admin']
+
 	participants = db.get_participant_du_groupes(id)
 	liste_cadeaux = db.get_user_cadeaux(userId,id)
 	liste_participants = []
@@ -116,7 +138,7 @@ def groupe(id,userId):
 		le_participant = db.get_user_with_id(parti['id'])
 		if le_participant:
 			liste_participants.append(le_participant[0])
-	return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId)
+	return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = int(userId), adminId = admin)
 
 
 
@@ -158,10 +180,45 @@ def retirer_cadeau(id,userId,cadeauId):
 
 
 
+@app.route('/ajouter_participant/<id>/<userId>', methods=['POST','GET'])
+def ajouter_participant(id,userId):
+	db = get_db()
+	print(request.form['email'])
+
+	userListe = db.get_user_with_email(request.form['email'])
+	if userListe:
+		user = userListe[0]
+		db.ajouter_participant(id,user['id'])
+
+	participants = db.get_participant_du_groupes(id)
+	liste_cadeaux = db.get_user_cadeaux(userId,id)
+	liste_participants = []
+
+	for parti in participants:
+		le_participant = db.get_user_with_id(parti['id'])
+		if le_participant:
+			liste_participants.append(le_participant[0])
+	#return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId)
+	return redirect (url_for('groupe', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId, id =id))
 
 
 
 
+@app.route('/retirer_participant/<id>/<userId>/<participantId>', methods=['POST','GET'])
+def retirer_participant(id,userId,participantId):
+	db = get_db()
+
+	db.enlever_participant(id,participantId)
+	participants = db.get_participant_du_groupes(id)
+	liste_cadeaux = db.get_user_cadeaux(userId,id)
+	liste_participants = []
+
+	for parti in participants:
+		le_participant = db.get_user_with_id(parti['id'])
+		if le_participant:
+			liste_participants.append(le_participant[0])
+	#return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId)
+	return redirect (url_for('groupe', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId, id =id))
 
 
 
