@@ -141,6 +141,20 @@ def groupe(id,userId):
 	db = get_db()
 
 	admin = db.get_groupe_admin(id)[0]['admin']
+	groupe = db.get_groupe(id)[0]
+	print(groupe)
+
+	pigeParti = db.get_pige(id)
+	aPige = 0
+	aPige_cadeaux = None
+	for pige in pigeParti:
+		if pige['pigeur'] == int(userId):
+			aPige = pige['aPige']
+			aPige_cadeaux = db.get_user_cadeaux(aPige,id)
+			break
+
+
+
 
 	participants = db.get_participant_du_groupes(id)
 	liste_cadeaux = db.get_user_cadeaux(userId,id)
@@ -150,7 +164,9 @@ def groupe(id,userId):
 		le_participant = db.get_user_with_id(parti['id'])
 		if le_participant:
 			liste_participants.append(le_participant[0])
-	return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = int(userId), adminId = admin)
+	return render_template('groupe.html', participants = liste_participants, groupeId = id, 
+		cadeaux = liste_cadeaux, userId = int(userId), adminId = admin, 
+		aPige = aPige, aPige_cadeaux = aPige_cadeaux, groupe = groupe)
 
 
 
@@ -242,14 +258,12 @@ def effectuer_pige(id,userId):
 	tabloId = []
 	tabloBrasser = []
 	participants = db.get_participant_du_groupes(id)
-	print(participants)
 
 	for parti in participants:
 		tabloId.append(parti['id'])
 		tabloBrasser.append(parti['id'])
 
 	if len(tabloId) > 0:
-		#random.shuffle(tabloBrasser)
 		max = len(tabloId)
 		min = 1
 		brasser = 0
@@ -260,30 +274,20 @@ def effectuer_pige(id,userId):
 			for i in range(max):
 				if tabloId[i] == tabloBrasser[i]:
 					brasser = 0
-			print(tabloBrasser)
 
+		for i in range(max):
+			db.ajouter_pige(id,tabloId[i],tabloBrasser[i])
 
+	participants = db.get_participant_du_groupes(id)
+	liste_cadeaux = db.get_user_cadeaux(userId,id)
+	liste_participants = []
 
-		#for i in range(max):
-			#nbr = random.randint(min,max)
-			#while nbr in tabloBrasser or nbr is tabloId[i]:
-				#nbr = random.randint(min,max)
-
-			#tabloBrasser.append(nbr)
-
-
-    #max = len(tabloId) - 1
-    #min = 0
-	print("original : ")
-	print(tabloId)
-	#print(tabloBrasser)
-
-	if tabloId == tabloBrasser:
-		print("ceeeeeeee egallllllll")
-
-
-	#return redirect(url_for('affichier_profil', userId = adminId))
-	return render_template('accueil.html')
+	for parti in participants:
+		le_participant = db.get_user_with_id(parti['id'])
+		if le_participant:
+			liste_participants.append(le_participant[0])
+	#return render_template('groupe.html', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId)
+	return redirect (url_for('groupe', participants = liste_participants, groupeId = id, cadeaux = liste_cadeaux, userId = userId, id =id))
 
 
 

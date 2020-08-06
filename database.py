@@ -56,6 +56,15 @@ class Database:
         return res
 
 
+
+    def get_groupe(self,_groupeId):
+        cursor = self.get_connection().cursor()
+        cursor.execute("select * from groupe where id is ?",(_groupeId,))
+        res = [dict(row) for row in cursor.fetchall()]
+        return res
+
+
+
      # a revoir --  retirer
     def get_user_groupes(self,_id):
         cursor = self.get_connection().cursor()
@@ -161,6 +170,7 @@ class Database:
         cursor.execute(("select * from pige where groupeId is ?"),(_groupeId))
         res = [dict(row) for row in cursor.fetchall()]
         return res
+
 
 
 

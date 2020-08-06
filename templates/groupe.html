@@ -13,14 +13,27 @@
           <div class="card">
             <!--img class="card-img-top" src="static/images/file_de_cadeau.jpeg" alt="Card image"-->
             <div class="card-body">
-              <h5 class="card-title">Gestion de la pige</h5>
-              <p class="card-text">Date de la pige : toto</p>
-              <p class="card-text">Date de l'échange : toto</p>
-              <p class="card-text">Montant maximum : toto</p>
-              <p class="card-text">Modifier mon profil</p>
+              <h2 class="card-title">Gestion de la pige</h2>
 
+              <h5 class="card-title">Nom du groupe  : {{groupe['nom']}}</h5>
+              <p class="card-text">Date de l'échange : {{groupe['datePige']}}</p>
+              <p class="card-text">Montant maximum : {{groupe['montant']}}$</p>
+
+              {% if aPige == 0 %}
+              <h5>La pige n'est pas effectuée pour l'instant.</h5>
+              <p>Veuillez appuyer sur "Effectuer la pige" pour effectuer la pige lorsque vous serez prêt.</p>
+              {% else %}
+              <h5>La pige a été effectuée!!!</h5>
+              <p>Vous pouvez voir qui vous avez pigé dans la section ci-dessous.</p>
+              {% endif %}
+
+              
+              {% if aPige != 0 %}
+              <p>Vous ne pouvez plus modifier la pige après avoir effectué la pige.<p>
+              {% else %}
               <a href="/creer_groupe" class="btn btn-outline-success" role="button">Modifer la pige</a>
               <a href="/effectuer_pige/{{groupeId}}/{{userId}}" class="btn btn-outline-success" role="button">Effectuer la pige</a>
+              {% endif %}
               
             </div>
             
@@ -36,11 +49,17 @@
           <div class="card">
           	<!--img class="card-img-top" src="{{url_for('static',filename='images/file_de_cadeau.jpeg')}}" alt="Card image"-->
             <div class="card-body">
-              <h5 class="card-title">PIGE DE : NOM #123</h5>
-              <p class="card-text">Date de la pige : toto</p>
-              <p class="card-text">Date de l'échange : toto</p>
-              <p class="card-text">Montant maximum : toto</p>
-              <p class="card-text">Modifier mon profil</p>
+              <h5 class="card-title">Nom du groupe  : {{groupe['nom']}}</h5>
+              <p class="card-text">Date de l'échange : {{groupe['datePige']}}</p>
+              <p class="card-text">Montant maximum : {{groupe['montant']}}$</p>
+
+              {% if aPige == 0 %}
+              <h5>La pige n'est pas effectuée pour l'instant.</h5>
+              <p>Veuillez communiquez avec l'organisateur pour que ce dernier effectue la pige.</p>
+              {% else %}
+              <h5>La pige a été effectuée!!!</h5>
+              <p>Vous pouvez voir qui vous avez pigé dans la section ci-dessous.</p>
+              {% endif %}
 
 
               
@@ -50,6 +69,72 @@
         </div>
       </div>
 {% endif %}
+
+
+
+
+
+
+{% if aPige != 0 %}
+{% for participant in participants if participant['id'] == aPige %}
+
+      {% set nomApige = participant['nom'] %}
+      {% set prenomApige = participant['prenom'] %}
+
+
+
+
+
+      <div class="row">
+        <div class="col-12 col-lg-12">
+          <div class="card">
+            <!--img class="card-img-top" src="{{url_for('static',filename='images/file_de_cadeau.jpeg')}}" alt="Card image"-->
+            <div class="card-body">
+              <h5 class="card-title">Bravo!!! Vous avez pigé : {{prenomApige}} {{nomApige}}</h5>
+              <p class="card-text">Voici la liste de cadeaux demandée par {{prenomApige}} :</p>
+
+
+
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th>Article</th>
+                    <th>Hyperlien</th>
+                    <th></th>
+                  </tr>
+ 
+
+                  {% for cadeau in aPige_cadeaux %}
+
+                    <tr>
+                      <!--td><button class="button" onclick="location.href='/'" type="button">Enlever</button></td-->
+                      <td>{{cadeau['cadeau']}}</td>
+                      <td>{{cadeau['url']}}</td>
+                    </tr>
+
+
+                   {% endfor %}
+
+                </table>
+              </div> 
+
+
+
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+{% endfor %}
+
+{% endif %}
+
+
+
+
+
 
 
 
@@ -177,9 +262,17 @@
                       <td>{{participant['prenom']}}</td>
                       <td>{{participant['nom']}}</td>
                       <td>
+
+                        {% if adminId == userId and aPige == 0 and adminId != participant['id'] %}
                           <button class="btn btn-danger" 
                           onclick="location.href='/retirer_participant/{{groupeId}}/{{userId}}/{{participant['id']}}'" 
                           type="button">Enlever</button>
+                        {% endif %}
+
+                        {% if adminId == participant['id'] %}
+                        Organisateur
+                        {% endif %}
+
                       </td>
                     </tr>
 
@@ -191,8 +284,11 @@
 
 
             <div>
-
+{% if adminId == userId and aPige == 0 %}
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#ajouterParticipant">Ajouter un participant</button>
+{% elif adminId == userId %}
+<h5>Vous ne pouvez plus ajouter ni retirer des particpants après avoir effectué la pige.</h5>
+{% endif %}
 
 <!-- Modal -->
 <div id="ajouterParticipant" class="modal fade" role="dialog">
