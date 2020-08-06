@@ -3,6 +3,30 @@
 {% block titre%}Page de profil{% endblock %}
 
 
+{% block nav %}
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        {{profil['prenom']}} {{profil['nom']}}
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/">deconnexion</a>
+      </div>
+    </li>
+
+{% endblock %}
+
+
+
+              {% block jumbo %}
+              <h1>Bienvenue {{profil['prenom']}} {{profil['nom']}}</h1>
+              {% endblock %}
+
+
+
+
+
 {% block corps %}
 
       <div class="row">
@@ -28,9 +52,9 @@
         </div>
 
 
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-8">
           <div class="card">
-          	<img class="card-img-top" src="{{url_for('static',filename='images/group.svg')}}" alt="Card image">
+          	<img class="card-img-top" src="{{url_for('static',filename='images/group.svg')}}" height="350" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">Mes groupes</h5>
 
@@ -40,6 +64,7 @@
                   <tr>
                     <th>Nom du groupe</th>
                     <th>Numero du groupe</th>
+                    <th></th>
                   </tr>
  
 
@@ -48,6 +73,11 @@
                     <tr style="cursor:pointer" onclick="location.href='/groupe/{{groupe['id']}}/{{profil['id']}}'">
                       <td>{{groupe['nom']}}</td>
                       <td>{{groupe['id']}}</td>
+                      <td>
+                      	{% if profil['id'] == groupe['admin']%}
+                      	Vous êtes l'organisateur
+                      	{% endif %}
+                      </td>
                     </tr>
 
 
@@ -102,7 +132,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">fermer</button>
       </div>
     </div>
 

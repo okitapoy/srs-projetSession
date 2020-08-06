@@ -3,6 +3,26 @@
 {% block titre%}Page du groupe{% endblock %}
 
 
+
+{% block nav %}
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        {{profil['prenom']}} {{profil['nom']}}
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/affichier_profil?userId={{profil['id']}}">profil</a>
+        <a class="dropdown-item" href="/">deconnexion</a>
+      </div>
+    </li>
+
+{% endblock %}
+
+
+
+
+
 {% block corps %}
 
 
@@ -218,7 +238,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">fermer</button>
       </div>
     </div>
 
@@ -242,7 +262,7 @@
         <div class="col-12 col-lg-6">
           <div class="card">
 
-          	<img class="card-img-top" src="{{url_for('static',filename='images/group.svg')}}" alt="Card image">
+          	<img class="card-img-top" src="{{url_for('static',filename='images/group.svg')}}"  height="300" alt="Card image">
             <div class="card-body">
               <h5 class="card-title">PARTICIPANTS</h5>
 
@@ -324,7 +344,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">fermer</button>
       </div>
     </div>
 

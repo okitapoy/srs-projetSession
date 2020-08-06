@@ -141,6 +141,7 @@ def groupe(id,userId):
 	db = get_db()
 
 	admin = db.get_groupe_admin(id)[0]['admin']
+	user = db.get_user_with_id(userId)[0]
 	groupe = db.get_groupe(id)[0]
 	print(groupe)
 
@@ -166,7 +167,7 @@ def groupe(id,userId):
 			liste_participants.append(le_participant[0])
 	return render_template('groupe.html', participants = liste_participants, groupeId = id, 
 		cadeaux = liste_cadeaux, userId = int(userId), adminId = admin, 
-		aPige = aPige, aPige_cadeaux = aPige_cadeaux, groupe = groupe)
+		aPige = aPige, aPige_cadeaux = aPige_cadeaux, groupe = groupe, profil = user)
 
 
 
