@@ -38,6 +38,17 @@ create table cadeaux(
 
 
 
+create table pige(
+	groupeId integer,
+	pigeur integer,
+	aPige integer,
+	foreign key (groupeId) references groupe(id),
+	foreign key (pigeur) references user(id),
+	foreign key (aPige) references user(id)
+);
+
+
+
 insert into user (nom,prenom,email,password) values("premier","user1","user1@email.com","password");
 insert into user (nom,prenom,email,password) values("deuxieme","user2","user2@email.com","password");
 insert into user (nom,prenom,email,password) values("troisieme","user3","user3@email.com","password");

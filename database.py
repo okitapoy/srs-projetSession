@@ -149,6 +149,21 @@ class Database:
 
 
 
+    def ajouter_pige(self,_groupeId,_pigeur,_aPige):
+        connection = self.get_connection()
+        connection.execute(("insert into pige(groupeId,pigeur,aPige)"
+                            "values(?,?,?)"),(_groupeId,_pigeur,_aPige))
+        connection.commit()
+
+
+    def get_pige(self,_groupeId):
+        cursor = self.get_connection().cursor()
+        cursor.execute(("select * from pige where groupeId is ?"),(_groupeId))
+        res = [dict(row) for row in cursor.fetchall()]
+        return res
+
+
+
 
 
 

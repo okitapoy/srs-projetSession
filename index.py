@@ -12,6 +12,7 @@ from flask import url_for
 from flask import jsonify
 from flask import send_from_directory, send_file
 from .database import Database
+import random
 #import uuid
 from datetime import datetime, timedelta, date
 #
@@ -59,9 +60,9 @@ def close_connection(exception):
 
 @app.route('/')
 def page_acceuil():
-	#db = get_db()
-	#n = db.get_user_complet()
-	#print(n)
+	#tab = [1,2,3,4,5,6,13,55,432]
+	#tt = {"un": 1,"deux": 2,"trois": 3,"quatre":4,"cinq":5}
+	#print(tt)
 	if len(request.args) > 0:
 		return render_template('accueil.html',erreur=request.args['erreur'])
 	else:
@@ -131,6 +132,8 @@ def creer_groupe(adminId):
 	db = get_db()
 	db.ajouter_groupe(request.form['nom'],adminId,request.form['montant'],request.form['date'])
 	return redirect(url_for('affichier_profil', userId = adminId))
+
+
 
 
 @app.route('/groupe/<id>/<userId>')
@@ -231,6 +234,56 @@ def retirer_participant(id,userId,participantId):
 
 
 
+
+@app.route('/effectuer_pige/<id>/<userId>')
+def effectuer_pige(id,userId):
+	db = get_db()
+	index = 0;
+	tabloId = []
+	tabloBrasser = []
+	participants = db.get_participant_du_groupes(id)
+	print(participants)
+
+	for parti in participants:
+		tabloId.append(parti['id'])
+		tabloBrasser.append(parti['id'])
+
+	if len(tabloId) > 0:
+		#random.shuffle(tabloBrasser)
+		max = len(tabloId)
+		min = 1
+		brasser = 0
+
+		while brasser == 0:
+			random.shuffle(tabloBrasser)
+			brasser = 1
+			for i in range(max):
+				if tabloId[i] == tabloBrasser[i]:
+					brasser = 0
+			print(tabloBrasser)
+
+
+
+		#for i in range(max):
+			#nbr = random.randint(min,max)
+			#while nbr in tabloBrasser or nbr is tabloId[i]:
+				#nbr = random.randint(min,max)
+
+			#tabloBrasser.append(nbr)
+
+
+    #max = len(tabloId) - 1
+    #min = 0
+	print("original : ")
+	print(tabloId)
+	#print(tabloBrasser)
+
+	if tabloId == tabloBrasser:
+		print("ceeeeeeee egallllllll")
+
+
+	#return redirect(url_for('affichier_profil', userId = adminId))
+	return render_template('accueil.html')
 
 
 
