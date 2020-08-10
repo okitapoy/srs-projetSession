@@ -57,12 +57,8 @@ def close_connection(exception):
 
 
 
-
 @app.route('/')
 def page_acceuil():
-	#tab = [1,2,3,4,5,6,13,55,432]
-	#tt = {"un": 1,"deux": 2,"trois": 3,"quatre":4,"cinq":5}
-	#print(tt)
 	if len(request.args) > 0:
 		return render_template('accueil.html',erreur=request.args['erreur'])
 	else:
