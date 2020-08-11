@@ -51,7 +51,8 @@
               {% if aPige != 0 %}
               <p>Vous ne pouvez plus modifier la pige après avoir effectué la pige.<p>
               {% else %}
-              <a href="/creer_groupe" class="btn btn-outline-success" role="button">Modifer la pige</a>
+              <!--a href="/creer_groupe" class="btn btn-outline-success" role="button">Modifer la pige</a-->
+              <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modifierPige">Modifer la pige</button>
               <a href="/effectuer_pige/{{groupeId}}/{{userId}}" class="btn btn-outline-success" role="button">Effectuer la pige</a>
               {% endif %}
               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#EnvoyerEmail">Envoyez un message aux participants</button>
@@ -380,13 +381,75 @@
       <form action="#">
         
         <div class="form-group">
-          <label for="message">Adresse couriel du participant :</label>
-          <input type="text" name="message" class="form-control" placeholder="Ecrire le message" id="message">  
+          <label for="message">Ecrire votre message ici :</label>
+          <!--input type="text" name="message" class="form-control" placeholder="Ecrire le message" id="message"-->  
+          <textarea class="form-control rounded-0" id="message" rows="10" cols="10"></textarea>
         </div>
 
 
 
         <button type="submit" class="btn btn-outline-primary">Envoyer</button>
+        <p style="color: red">Note : ceci est à titre d'exemple et n'est pas implementé</p>
+        <p style="color: red">Appuyez sur fermer pour fermer cette fenêtre</p>
+        
+      </form>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">fermer</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modifierPige">Gérer mon profil</button-->
+
+<!-- Modal -->
+<div id="modifierPige" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modifier la pige</h4>
+      </div>
+      <div class="modal-body">
+
+    <p>Veuillez entrer le nouveau montant des cadeaux</p>
+
+
+
+      <form>
+        
+        <div class="form-group">
+          <label for="nouvmontant">Nouveau montant :</label>
+          <input type="text" name="nouvmontant" class="form-control" placeholder="Entrer le courriel" id="nouvmontant">  
+        </div>
+
+
+
+        <!--button type="submit" class="btn btn-outline-primary">Soumettre</button-->
+        <p style="color: red">Note : ceci est à titre d'exemple et n'est pas implementé</p>
+        <p style="color: red">Appuyez sur fermer pour fermer cette fenêtre</p>
         
       </form>
 
